@@ -7,13 +7,15 @@ export const verifyToken = async (req, res, next) => {
     if (!token) {
       return res.status(403).send("Access Denied");
     }
+
     if (token.startsWith("Bearer ")) {
       token = token.slice(7, token.length).trimLeft();
     }
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
+
+    const verified = jwt.verify(token, 'SOMEsuperHardStringTOGueseseasoadawkdoadko');
     req.user = verified;
     next();
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
